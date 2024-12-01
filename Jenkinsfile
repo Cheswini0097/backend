@@ -27,6 +27,7 @@ pipeline {
         }
         stage('Docker build') { // Added missing curly braces for stage block
             steps {
+                
                 sh """
                 docker build -t chethankumar6/backend:${appVersion} .
                 docker images
