@@ -20,17 +20,18 @@ pipeline {
                 }
             }
         }
-        stage ('Install Dependencies')
-        steps {
-            sh 'npm install'
+        stage('Install Dependencies') { // Added missing curly braces for stage block
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Docker build') { // Added missing curly braces for stage block
+            steps {
+                sh """
+                docker build -t chethankumar6/backend:${appVersion} .
+                docker images
+                """
+            }
         }
     }
-    stage('Docker build')
-    steps {
-        sh  """
-        docker build -t chethankumar6/backend:${appVersion} .
-        docker images
-        """
-    }
 }
-            
