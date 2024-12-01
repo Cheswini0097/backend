@@ -1,25 +1,26 @@
 pipeline {
     agent {
-        label 'Agent-1' // Ensures this pipeline runs on an agent with the label 'Agent-1'
+        label 'AGENT-1'
     }
-    options {
-        timeout(time: 30, unit: 'MINUTES') // Corrected syntax for the timeout option
-        disableConcurrentBuilds() // Corrected method name spelling
-        // retry(1) // Uncomment if needed
+    options{
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        //retry(1)
     }
-    environment { // Fixed typo from "envinorment" to "environment"
+}
+        
+    environment {
         DEBUG = 'true'
-        appVersion = '' // Declaring appVersion as an environment variable
+        appVersion = '' // this will become global, we can use across pipeline
     }
+
     stages {
         stage('Read the version') {
             steps {
-                script { // Wrapping the script block properly
-                    def packageJson = readJSON file: 'package.json' // Fixed variable name
-                    env.appVersion = packageJson.version // Accessing the version field from the package.json
-                    echo "App version: ${env.appVersion}" // Corrected variable interpolation syntax
+                script{
+                    def packageJson = readJSON file: 'package.json'
+                    appVersion = packageJson.version
+                    echo "App version: ${appVersion}"
                 }
             }
         }
-    }
-}
