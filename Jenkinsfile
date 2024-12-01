@@ -35,4 +35,16 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            echo "this section runs always"
+            deleteDir()
+        }
+        sucess {
+            echo "this section runs when pipeline succeds"
+        }
+        failure {
+            echo  "this section runs when pipeline fails"
+        }
+    }
 }
